@@ -18,7 +18,7 @@ on:
       - Pipeline/scripts/**
       - Pipeline/deploy-train.py
       - Pipeline/requirements.txt
-      - .github/workflows/train_model.yml
+      - .github/workflows/train_model_dev.yml
 
 jobs:
   deploy_ml_training_pipeline:
