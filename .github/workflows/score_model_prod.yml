@@ -5,26 +5,24 @@ permissions:
   pages: write
   id-token: write
 
-name: DEV - Train Model
+name: PROD - Score Model
 
 on:
   workflow_dispatch:
     inputs: {}
   push:
     branches:
-      - dev
+      - master
     paths:
-      - Pipeline/config/**
-      - Pipeline/scripts/**
-      - Pipeline/deploy-train.py
-      - Pipeline/requirements.txt
-      - .github/workflows/train_model_dev.yml
+      - Pipeline/data/**
+      - Pipeline/deploy-score.py
+      - .github/workflows/score_model_prod.yml
 
 jobs:
-  deploy_ml_training_pipeline:
-    name: DEV - Deploy the Training pipeline to Azure ML
+  deploy_ml_scoring_pipeline:
+    name: PROD - Deploy the Scoring pipeline to Azure ML
     runs-on: ubuntu-latest
-    environment: Development
+    environment: Production
     steps:
     - name: Repo checkout
       uses: actions/checkout@v3
@@ -53,6 +51,6 @@ jobs:
         echo "Creating config file"
         mkdir .azureml
         echo -e "{ \"subscription_id\": \"${{ secrets.AZURE_SUBSCRIPTION_ID }}\", \"resource_group\": \"CSAzureML\", \"workspace_name\": \"CSAzureML\" }" > .azureml/config.json
-        echo "Run training pipeline"
-        # Run training pipeline
-        python deploy-train.py
+        echo "Run scoring pipeline"
+        # Run scoring pipeline
+        python deploy-score.py

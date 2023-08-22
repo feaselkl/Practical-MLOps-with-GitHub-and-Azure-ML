@@ -5,26 +5,26 @@ permissions:
   pages: write
   id-token: write
 
-name: DEV - Train Model
+name: PROD - Train Model
 
 on:
   workflow_dispatch:
     inputs: {}
   push:
     branches:
-      - dev
+      - master
     paths:
       - Pipeline/config/**
       - Pipeline/scripts/**
       - Pipeline/deploy-train.py
       - Pipeline/requirements.txt
-      - .github/workflows/train_model_dev.yml
+      - .github/workflows/train_model_prod.yml
 
 jobs:
   deploy_ml_training_pipeline:
-    name: DEV - Deploy the Training pipeline to Azure ML
+    name: PROD - Deploy the Training pipeline to Azure ML
     runs-on: ubuntu-latest
-    environment: Development
+    environment: Production
     steps:
     - name: Repo checkout
       uses: actions/checkout@v3
