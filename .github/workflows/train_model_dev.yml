@@ -46,9 +46,13 @@ jobs:
         python-version: "3.10"
     - name: Run AML pipeline
       run: |
-        echo "Installing dependencies"
         cd Pipeline/
+        echo "Installing dependencies"
         python -m pip install -r requirements.txt
+        echo "Creating config file"
+        mkdir .azureml
+        touch config.json
+        echo -e "{ \"subscription_id\": \"${{ secrets.AZURE_SUBSCRIPTION_ID }}\", \"resource_group\": \"CSAzureML\", \"workspace_name\": \"CSAzureML\" }"
         echo "Run training pipeline"
         # Run training pipeline
         python deploy-train.py
