@@ -152,7 +152,5 @@ except Exception:
 # subscription owner!
 # Create a job to score the data
 job=ml_client.batch_endpoints.invoke(endpoint_name=endpoint.name, input=Input(type=AssetTypes.URI_FOLDER, path=chicago_dataset_unlabeled.path))
-# Wait for the job to finish
-ml_client.jobs.stream(job.name)
-# Download the results of the job
-ml_client.jobs.download(name=job.name, output_name='score', download_path='./')
+# Wait for the job to finish and then access the data via the AML interface.
+# Jobs > chicago-parking-tickets-batch > {job name} > BatchScoring > Outputs + logs > Data outputs (show data outputs!)
