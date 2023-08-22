@@ -1,0 +1,4 @@
+pandas
+numpy
+azure.ai.ml
+azure.identity
