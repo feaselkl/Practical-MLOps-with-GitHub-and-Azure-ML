@@ -1,0 +1,47 @@
+# To learn more about this:
+# https://learn.microsoft.com/azure/machine-learning/how-to-github-actions-machine-learning
+
+# Run this from the /setup/ folder.
+
+$subscriptionId = "{FILL IN YOUR SUBSCRIPTION ID HERE}"
+$resourceGroupName = "{FILL IN YOUR RESOURCE GROUP NAME HERE}"
+
+# Register a new Entra ID application registration
+az ad app create --display-name ChicagoParkingTicketsMLOpsGitHub
+
+# Copy the appID as AZURE_CLIENT_ID / client-id
+$appId = "{FILL IN THE RESULTING appID VALUE HERE}"
+
+# Copy the id as objectId and APPLICATION-OBJECT-ID
+$objectId = "{FILL IN THE RESULTING objectId VALUE HERE}"
+
+# Create a Service principal based on that app ID
+az ad sp create --id $appId
+
+# Copy the appOwnerOrganizationId (nee appOwnerTenantId) as AZURE_TENANT_ID
+$tenantId = "{FILL IN THE RESULTING appOwnerOrganizationId VALUE HERE}"
+
+# Copy the service principal object ID (id)
+$assigneeObjectId = "{FILL IN THE RESULTING id VALUE HERE}"
+
+# Create a new role assignment based on the subscription and object
+az role assignment create --role contributor \
+--scope /subscriptions/$subscriptionId/resourceGroups/$resourceGroupName \ 
+--subscription $subscriptionId --assignee-object-id  $assigneeObjectId \ 
+--assignee-principal-type ServicePrincipal
+
+# Navigate to the GitHub repo, e.g., https://github.com/feaselkl/Practical-MLOps-with-GitHub-and-Azure-ML/
+# Navigate to Settings > Environments
+# Note the Development and Production environments.  Create them if they are not there.
+
+# Create a new federated identity credential
+# Make sure to set the name and subject correctly for your uses!
+az ad app federated-credential create --id $objectId --parameters credentialProduction.json
+az ad app federated-credential create --id $objectId --parameters credentialDevelopment.json
+
+# Navigate to the GitHub repo, e.g., https://github.com/feaselkl/Practical-MLOps-with-GitHub-and-Azure-ML/
+# Navigate to Settings > Secrets and variables > Actions
+# Create three repository secrets per environment:
+AZURE_CLIENT_ID
+AZURE_TENANT_ID
+AZURE_SUBSCRIPTION_ID

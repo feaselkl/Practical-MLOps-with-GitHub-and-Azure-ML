@@ -59,6 +59,16 @@ This will create a batch endpoint and deployment, upload data to a Datastore in 
 
 If you do not do this, you will likely get a strange `BY_POLICY` error message when running this script.
 
-### Running as GitHub Actions
+### Linking Azure Machine Learning to GitHub via OpenID Connect
 
-TODO:  add notes for GitHub Actions configuration, secrets to manage, etc.
+Before we can use GitHub Action workflows to execute Azure Machine Learning pipelines, we need to grant appropriate permissions.  The steps for this come from [Microsoft Learn](https://learn.microsoft.com/azure/machine-learning/how-to-github-actions-machine-learning), specifically the options for OpenID Connect.
+
+Follow the instructions in the Cheat Sheets folder, [02 - Application Security Configuration.txt](Cheat%20Sheets/02%20-%20Application%20Security%20Configuration.txt).  The individual commands to run are in [02b - az cli commands.txt](Cheat%20Sheets/02b%20-%20az%20cli%20commands.txt).  Note that this is NOT an automated script!
+
+### Running the GitHub Actions
+
+Each GitHub Action is in the .github/workflows folder.  There are two workflows for training AML pipelines and two for scoring.  The prior section on linking AML to GitHub **must** be completed before you can successfully run a pipeline.
+
+For a review of what each workflow is doing, refer to the Cheat Sheets folder, specifically [03 - GitHub Actions Review.txt](Cheat%20Sheets/03%20-%20GitHub%20Actions%20Review.txt)
+
+Note that the GitHub Action workflow will kick off an Azure Machine Learning pipeline but it will not wait for that pipeline to complete, so in order to see if the pipeline run was successful, you will need to review those results in the Azure ML Studio or via CLI.

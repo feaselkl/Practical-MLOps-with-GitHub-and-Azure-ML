@@ -1,0 +1,19 @@
+Code Review and AML Resource Review Cheat Sheet
+-----------------------------------------------
+1. Prepare the workspace.
+	a. PowerShell terminal with az cli installed
+		i. $subscriptionId should already be set to avoid showing this on screen!
+	b. Navigate to the /setup/ directory for this repo
+	c. Open the file 02b - az cli commands.txt
+2. Register a new Entra ID application registration.
+	a. Application registrations tie to service principals
+	b. Review the output JSON and save "appID" and "id" values as PowerShell variables
+3. Create a new service principal based on the Entra ID app registration.
+	a. Save the "appOwnerOrganizationId" and "id" values as PowerShell variables
+4. Create a new role assignment, granting the service principal Contributor on the AML workspace.
+5. Create Development and Production environments in the GitHub repo if they do not exist.
+6. Modify credentialDevelopment.json and credentialProduction.json to point to the right repo.
+7. Create federated identity credentials for development and production.
+8. Return to the GitHub repo and create three secrets per environment
+	a. AZURE_CLIENT_ID, AZURE_TENANT_ID, AZURE_SUBSCRIPTION_ID
+

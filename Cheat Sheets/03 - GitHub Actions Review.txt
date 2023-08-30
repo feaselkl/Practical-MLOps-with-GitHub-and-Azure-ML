@@ -1,0 +1,40 @@
+GitHub Actions Review Cheat Sheet
+---------------------------------
+1. Navigate to the GitHub repository for this talk.
+2. Review relevant settings.
+	a. Code and automation > Environments
+	b. Security > Secrets and variables > Actions
+3. Return to Code tab and drill into .github/workflows.  Choose train_model_dev.yml.
+	a. Explain need for permissions, specifically "id-token: write" for Azure login
+	b. Describe "on" block, note that these are "or" conditions
+		i. workflow_dispatch = "Run manually"
+		ii. push -- note that these are "and" conditions within the push block
+	c. Describe "jobs" block -- can have multiple jobs running either in parallel or sequentially
+		i. Gist of job:
+			- Obtain Ubuntu VM
+			- Install az CLI and ML extension
+			- Connect to Azure
+			- Install Python and dependencies
+			- Create config file for specifying AML environment
+			- Run "python deploy-train.py"
+		ii. "runs-on" can specify GitHub compute (ubuntu-latest, windows, macOS) or self-hosted runners
+		iii. "environment" attribute ties back to GitHub environment
+		iv. "uses" links to a published GitHub action, e.g. azure/login or actions/setup-python.  @ denotes version number.
+			- "uses" may also have "with" block to set parameters
+		v. Specify secrets with ${{ secrets.[name] }}
+		vi. "run" blocks may have multiple lines with the syntax "run: |"
+4. Review score_model_prod.yml.
+	a. Note general syntax is the same, though branches points to master instead of dev and paths are different.
+	b. Line 25:  "environment: Production"
+	c. Jobs block looks very similar except for final line, "python deploy-score.py"
+5. Navigate to Actions tab.
+	a. Note the four workflows on the left-hand side
+	b. Choose DEV - Train Model and then select the one job.
+		i. Drill into log details -- Install az CLI.  Note the "Installed Azure CLI and ML extension" line--comes from YML
+		ii. Drill into Run AML pipeline
+			- Note installation details come from requirements.txt
+			- Note bottom line, which comes from the code--console details get bubbled up into these logs
+	c. Choose DEV - Score Model. In Run workflow, select "Branch: dev" and then Run workflow
+		i. Review log details until it completes
+		ii. Navigate to Azure ML Studio and choose the chicago-parking-tickets-batch experiment
+		iii. Open the active job and review results there -- this may take too long to do in a live demo!
