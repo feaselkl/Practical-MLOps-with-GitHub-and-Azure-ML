@@ -1,0 +1,15 @@
+Demonstrate Training Update Cheat Sheet
+---------------------------------------
+1. Create a new issue with some details.
+2. Create a feature branch to resolve this issue.  Could include issue number in branch but not required.
+3. In GitHub Desktop (or git terminal), check out new branch.
+4. Make a code change to one of the protected files, such as deploy-train.py.
+5. Stage and commit change.
+6. Create a pull request to dev branch, tagging the issue and setting a reviewer.
+7. Approve the pull request.
+8. Switch to the Actions and navigate to DEV - Train Model.  Note the new job.
+9. After the GitHub Action completes, navigate to Azure ML Studio and Jobs.
+	a. Choose the Chicago_Parking_Tickets_Code-First experiment.
+	b. Review the latest job in action.  NOTE:  this will take an hour to complete, so cannot finish during a presentation!
+10. Create a pull request from branch to master, setting a reviewer and closing the issue along the way.
+11. Approve the pull request and delete the feature branch.

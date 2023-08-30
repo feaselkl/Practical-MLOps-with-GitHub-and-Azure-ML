@@ -1,0 +1,19 @@
+Code Review and AML Resource Review Cheat Sheet
+-----------------------------------------------
+1. Review the dataset called ChicagoParkingTickets in Azure ML Studio.
+	a. Dataset created from data at https://cspolybasepublic.blob.core.windows.net/cstrainingpublicdata/ChicagoParkingTickets.txt
+	b. That CSV is publicly available
+2. Open deploy-train.py and briefly describe the workflow.
+	a. Review one pre-processing config and script file combo
+	b. Explain build_pipeline() function
+	c. Quickly review train_model and register_model functions
+3. Open deploy-score.py and briefly describe the two workflows.
+	a. Open /data/ folder and pick one file for review
+	b. Open score_model.py and review data
+4. Open Azure ML Studio and navigate to the Jobs page.
+	a. Look at Chicago_Parking_Tickets_Code-First experiment
+		i. Open latest successful job
+		ii. Quickly cover the job steps but don't drill into details
+	b. Look at chicago-parking-tickets-batch experiment
+		i. Open latest successful job
+		ii. Open BatchScoring step, navigate to Outputs + logs, select "Show data outputs," and access the score data
