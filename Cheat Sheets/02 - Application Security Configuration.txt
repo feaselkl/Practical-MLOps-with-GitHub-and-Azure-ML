@@ -1,5 +1,5 @@
-Code Review and AML Resource Review Cheat Sheet
------------------------------------------------
+Application Security Configuration Cheat Sheet
+----------------------------------------------
 1. Prepare the workspace.
 	a. PowerShell terminal with az cli installed
 		i. $subscriptionId should already be set to avoid showing this on screen!
